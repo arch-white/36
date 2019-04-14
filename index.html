@@ -27,12 +27,6 @@
       body{
         font-family: Roboto Slab,Helvetica Neue,Helvetica,Arial,sans-serif!important;
       }
-      @media print {
-        .setting_board{
-          display: none;
-        }
-      }
-
       .my_life h1{
         text-align: center;
         font-size: 40px;
@@ -111,6 +105,16 @@
       }
       .setting_board{
         padding: 10px 20px;
+        position: relative;
+      }
+      @media print {
+        .setting_board{
+          display: none;
+        }
+      }
+      .foot{
+        position: absolute;
+        bottom: 0;
       }
     </style>
   </head>
@@ -126,6 +130,9 @@
         <p>
           <button onclick="window.print()">Print</button>
         </p>
+        <div class='foot'>
+          Inspired by <a href="https://www.youtube.com/watch?v=nIFClfBXuIQ">Vadim Makishvili report</a>
+        </div>
       </div>
       <div class="my_life">
         <h1>My life</h1>
