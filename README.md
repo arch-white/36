@@ -1,1 +1,1 @@
-https://tarokinoe.github.io/36/
+https://the36.me
