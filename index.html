@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>36</title>
+    <style type="text/css">
+      body{
+        font-family: Roboto Slab,Helvetica Neue,Helvetica,Arial,sans-serif!important;
+      }
+      @media print {
+        .setting_board{
+          display: none;
+        }
+      }
+
+      .my_life h1{
+        text-align: center;
+        font-size: 40px;
+        margin: 30px 0px 30px 100px;
+      }
+
+      .table_container{
+        position: relative;
+        margin-left: 100px;
+        margin-top: 60px;
+      }
+      /*--------------------------*/
+      .cell {
+        height: 8px;
+        width: 8px;
+        margin: 1px;
+        border: 1px solid #00000000;
+        font-size: 14px;
+        line-height: 8px;
+      }
+      /*--------------------------*/
+      .table .cell{
+        border: 1px solid #00000059;
+      }
+      .table__row{
+        display: flex;
+      }
+      /*--------------------------*/
+      .year_axis{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -20px;
+        width: 20px;
+      }
+      .year_axis_title{
+        transform: rotate(270deg);
+        position: absolute;
+        top: 49px;
+        left: -68px;
+        font-size: 25px;
+      }
+      .year_axis__row{
+        display: flex;
+      }
+      .year_axis .cell{
+        border: 1px solid #00000000;
+      }
+      /*--------------------------*/
+      .week_axis{
+        position: absolute;
+        top: -15px;
+        left: 0;
+        height: 15px;
+        display: flex;
+      }
+      .week_axis .cell{}
+      .week_axis__title{
+        font-size: 25px;
+        position: absolute;
+        left: 15px;
+        right: 0;
+        padding-bottom: 10px;
+        bottom: 100%;
+      }
+      /*--------------------------*/
+      input {
+        width: 200px
+      }
+      .lived {
+        background: #ffcccc;
+      }
+      .section{
+        display: -webkit-flex;
+        display: flex;
+      }
+      .setting_board{
+        padding: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section">
+      <div class='setting_board'>
+        <p>
+          <label for="birthday">Введите дату вашего рождения:</label>
+        </p>
+        <p>
+          <input id="birthday" placeholder="1990-01-01" name="birthday">
+        </p>
+        <p>
+          <button onclick="window.print()">Распечатать</button>
+        </p>
+      </div>
+      <div class="my_life">
+        <h1>Моя жизнь</h1>
+        <div class='table_container' id='table_container'>
+          <div class='year_axis' id='year_axis'>
+            <div class='year_axis_title'>⟵Года</div>
+          </div>
+          <div class='week_axis' id='week_axis'>
+            <div class='week_axis__title'>Недели⟶</div>
+          </div>
+          <div class='table' id='table'></div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <script type="text/javascript">
+      var tableContainer = document.getElementById('table_container');
+
+      // create week table
+      var table = document.getElementById('table');
+      for (var i = 1; i <= 71; i++) {
+        var row = document.createElement('div');
+        row.setAttribute('class', 'table__row');
+        for (var j = 1; j < 365 / 7; j++){
+         var cell = document.createElement('div');
+         cell.setAttribute('class', 'cell');
+         row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+      tableContainer.appendChild(table);
+
+      // add year axis division
+      var yearAxis = document.getElementById('year_axis');
+      for (var i = 1; i <= 71; i++) {
+        var row = document.createElement('div');
+        row.setAttribute('class', 'year_axis__row')
+        var cell = document.createElement('div');
+        cell.setAttribute('class', 'cell');
+        if (i % 5 == 0){
+          cell.appendChild(document.createTextNode(i.toString()));
+        }
+        row.appendChild(cell);
+        yearAxis.appendChild(row);
+      }
+
+      // create week division
+      var weekAxis = document.getElementById('week_axis')
+      for (var j = 1; j < 365 / 7; j++){
+        var cell = document.createElement('div');
+        cell.setAttribute('class', 'cell');
+        if (j % 5 == 0){
+          cell.appendChild(document.createTextNode(j.toString()));
+        }
+        weekAxis.appendChild(cell);
+      }
+
+      // filling table
+      var input = document.getElementById('birthday');
+      // input.value = '1988-03-17';
+
+      function fillLivedWeeks(){
+        var now = new Date();
+        var birthday = new Date(document.getElementById('birthday').value);
+        if (birthday){
+          var weeks = Math.round((now - birthday) / (1000 * 60 * 60 * 24 * 7 ));
+          var cellList = Array.from(document.querySelectorAll(".table .cell"));
+          var filledCount = 0;
+          for (var cell of cellList){
+            if (filledCount < weeks){
+              cell.classList.add('class', 'lived');
+              filledCount++;
+            } else {
+              cell.classList.add('class', 'unlived');
+            }
+          }
+        }
+      }
+      input.addEventListener('change', fillLivedWeeks);
+      fillLivedWeeks();
+    </script>
+  </body>
+</html>
