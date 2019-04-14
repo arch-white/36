@@ -180,10 +180,10 @@
           var filledCount = 0;
           for (var cell of cellList){
             if (filledCount < weeks){
-              cell.classList.add('class', 'lived');
+              cell.classList.add('lived');
               filledCount++;
             } else {
-              cell.classList.add('class', 'unlived');
+              cell.classList.remove('lived');
             }
           }
         }
